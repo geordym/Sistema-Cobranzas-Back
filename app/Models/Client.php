@@ -10,4 +10,10 @@ class Client extends Model
     use HasFactory;
 
 
+    public function suscriptions()
+    {
+        return $this->hasMany(Suscription::class);
+    }
+
+
 }

@@ -325,6 +325,13 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
 
+        [
+            'text' => 'Suscripciones',
+            'url'  => 'admin/suscripciones',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+
+
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

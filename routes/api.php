@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+/*CLIENTS ROUTES */
+
+Route::post('/suscriptions', [App\Http\Controllers\SuscriptionController::class, 'create']);
+Route::get('/suscriptions', [App\Http\Controllers\SuscriptionController::class, 'list']);
