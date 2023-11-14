@@ -23,7 +23,7 @@ class LoginController extends Controller
             // Usuario autenticado correctamente
             // Puedes generar y devolver un token de acceso aquí si estás usando Laravel Passport
 
-            return response()->json(['message' => 'Autenticación exitosa', 'user' => $usuario], 200);
+            return response()->json($usuario, 200);
         } else {
             // Usuario no encontrado o contraseña incorrecta
             return response()->json(['message' => 'Credenciales incorrectas'], 401);
