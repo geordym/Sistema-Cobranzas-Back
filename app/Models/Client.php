@@ -15,5 +15,10 @@ class Client extends Model
         return $this->hasMany(Suscription::class);
     }
 
+    public function bills()
+    {
+        return $this->hasMany(Bill::class);
+    }
+
 
 }

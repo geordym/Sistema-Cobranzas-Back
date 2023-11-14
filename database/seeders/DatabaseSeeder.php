@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Plan;
 use App\Models\Tarifa;
 use App\Models\Client;
+use App\Models\Option;
 
 class DatabaseSeeder extends Seeder
 {
@@ -91,6 +92,17 @@ class DatabaseSeeder extends Seeder
             'id_type' => 'CEDULA CIUDADANIA',
             'identification' => 214214124
         ]);
+
+        Option::create([
+            'property' => 'days_expiration_bills',
+            'value' => 5
+        ]);
+
+        Option::create([
+            'property' => 'duration_suscription',
+            'value' => 30
+        ]);
+
 
     }
 }

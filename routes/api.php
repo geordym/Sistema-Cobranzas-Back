@@ -23,3 +23,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/suscriptions', [App\Http\Controllers\SuscriptionController::class, 'create']);
 Route::get('/suscriptions', [App\Http\Controllers\SuscriptionController::class, 'list']);
+
+/*BILLS ROUTES */
+
+Route::post('/bills', [App\Http\Controllers\BillController::class, 'create']);
+Route::get('/bills', [App\Http\Controllers\BillController::class, 'list']);
+
+
+Route::post('/auth/login', [App\Http\Controllers\BillController::class, 'login']);

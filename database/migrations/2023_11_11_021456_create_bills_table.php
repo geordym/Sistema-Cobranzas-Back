@@ -15,7 +15,13 @@ return new class extends Migration
     {
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('client_id');
+            $table->date('date');
+            $table->string('status');
             $table->timestamps();
+
+            $table->foreign('client_id')->references('id')->on('clients');
+
         });
     }
 
