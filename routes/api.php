@@ -30,4 +30,4 @@ Route::post('/bills', [App\Http\Controllers\BillController::class, 'create']);
 Route::get('/bills', [App\Http\Controllers\BillController::class, 'list']);
 
 
-Route::post('/auth/login', [App\Http\Controllers\BillController::class, 'login']);
+Route::post('/auth/login', [App\Http\Controllers\LoginController::class, 'login']);
