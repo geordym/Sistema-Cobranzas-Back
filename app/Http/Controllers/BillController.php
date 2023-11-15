@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\Client;
+use App\Models\Bill;
+use App\Models\ItemBill;
 
 class BillController extends Controller
 {
@@ -53,11 +55,29 @@ class BillController extends Controller
             return response()->json(['errors' => 'El cliente no existe en el sistema'], 400);
         }
 
+        $totalBill = 0;
+        foreach($billItems as $item){
+            $totalBill+= $item["total"];
+        }
+
+        $bill = Bill::create([
+            'client_id'=> $client_id,
+            'date'=> $date,
+            'total' => $totalBill
+        ]);
+
+        $bill->items()->createMany($billItems);
+
+
+        return response()->json(['message' => 'Operación exitosa'], 200);
 
 
     }
 
     public function list()
     {
+        $bills = Bill::all();
+
+        return response()->json(['bills' => $bills], 200);
     }
 }

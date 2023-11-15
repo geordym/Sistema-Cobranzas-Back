@@ -10,7 +10,6 @@ class ItemBill extends Model
     use HasFactory;
 
     protected $fillable = [
-        'bill_id',
         'quantity',
         'cost',
         'description',

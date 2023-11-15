@@ -30,4 +30,9 @@ Route::post('/bills', [App\Http\Controllers\BillController::class, 'create']);
 Route::get('/bills', [App\Http\Controllers\BillController::class, 'list']);
 
 
+/*PAYMENTS ROUTES */
+Route::post('/payments', [App\Http\Controllers\PaymentController::class, 'create']);
+Route::get('/payments', [App\Http\Controllers\PaymentController::class, 'list']);
+
+
 Route::post('/auth/login', [App\Http\Controllers\LoginController::class, 'login']);
