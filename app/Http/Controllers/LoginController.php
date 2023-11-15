@@ -12,8 +12,9 @@ class LoginController extends Controller
 
     public function login(Request $request){
         $json = $request->json()->all();
-        $correo = $json["correo"];
-        $contraseña = $json["contraseña"];
+        $credenciales = $json["credenciales"];
+        $correo = $credenciales["correo"];
+        $contraseña = $credenciales["contraseña"];
 
         // Buscar usuario por correo y contraseña
         $usuario = User::where('email', $correo)->first();
