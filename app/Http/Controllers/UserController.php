@@ -20,9 +20,9 @@ class UserController extends Controller
         return view('profile', compact('user'));
     }
 
-    public function users(){
+    public function list(){
         $users = User::all();
-        return view('users')->with('users', $users);
+        return response()->json(['users' => $users], 200);
     }
 
     public function create(Request $request){

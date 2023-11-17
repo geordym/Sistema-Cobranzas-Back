@@ -19,6 +19,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+/*USERS ROUTES */
+
+Route::post('/users', [App\Http\Controllers\UserController::class, 'create']);
+Route::get('/users', [App\Http\Controllers\UserController::class, 'list']);
+
+
 /*CLIENTS ROUTES */
 
 Route::post('/suscriptions', [App\Http\Controllers\SuscriptionController::class, 'create']);
