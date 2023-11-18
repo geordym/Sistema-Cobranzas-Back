@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
+
+use App\Models\User;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -21,25 +25,49 @@ class UserController extends Controller
     }
 
     public function list(){
-        $users = User::all();
-        return response()->json(['users' => $users], 200);
+        $users = User::with('role')->get();
+
+        $newUsers = [];
+
+        foreach ($users as $user) {
+            $newUser = $user;
+            $newUser->rol = $user->role->name;
+            $newUsers[] = $newUser;
+        }
+
+        return response()->json($users, 200);
     }
 
+
     public function create(Request $request){
-        $name = $request->input('nombre');
-        $email = $request->input('email');
-        $id_rol = $request->input('rol');
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'rol' => 'required|string|exists:roles,name',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $json = $request->json()->all();
+        $name = $json['name'];
+        $email = $json['email'];
+        $rol =  $json['rol'];
+
+        // Obtener el ID del rol a través de la consulta where
+        $id_rol = Role::where('name', $rol)->first()->id;
 
         $user = User::create([
             'name' => $name,
             'email' => $email,
             'password' => bcrypt($email),
-            'id_rol' => $id_rol, // Asigna el ID del segundo rol al usuario 2
+            'id_rol' => $id_rol,
         ]);
 
-        return redirect('/admin/users');
-
+        return response()->json(['user' => $user], 201);
     }
+
 
     public function logout(){
         Auth::logout(); // Cierra la sesión del usuario
