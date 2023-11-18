@@ -76,8 +76,8 @@ class BillController extends Controller
 
     public function list()
     {
-        $bills = Bill::all();
+        $bills = Bill::with(['client', 'items'])->get();
 
-        return response()->json(['bills' => $bills], 200);
+        return response()->json( $bills, 200);
     }
 }

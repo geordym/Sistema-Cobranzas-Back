@@ -18,9 +18,11 @@ return new class extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('client_id');
-            $table->date('date');
             $table->string('status')->default(BillStatus::GENERATED);
             $table->decimal('total', 10, 2);
+            $table->date('date');
+            $table->date('expiration_date');
+
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('clients');

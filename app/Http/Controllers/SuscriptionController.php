@@ -18,8 +18,8 @@ class SuscriptionController extends Controller
 
     public function list()
     {
-        $suscriptions = Suscription::all();
-        return json_encode(["suscripciones" => $suscriptions]);
+        $suscriptions = Suscription::with(['client', 'plan'])->get();
+        return json_encode($suscriptions);
     }
 
 
@@ -28,8 +28,8 @@ class SuscriptionController extends Controller
         $json = $request->json()->all();
 
         $validator = Validator::make($json, [
-            'id_plan' => 'required|numeric',
-            'id_client' => 'required|numeric',
+            'plan_id' => 'required|numeric',
+            'client_id' => 'required|numeric',
             'cost' => 'required|numeric',
             'start_date' => 'required'
         ]);
@@ -40,8 +40,8 @@ class SuscriptionController extends Controller
 
 
 
-        $id_plan = $json["id_plan"];
-        $id_client = $json["id_client"];
+        $id_plan = $json["plan_id"];
+        $id_client = $json["client_id"];
         $cost = $json["cost"];
         $start_date = $json["start_date"];
 
