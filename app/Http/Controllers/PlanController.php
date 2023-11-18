@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\Plan;
 
@@ -17,18 +18,32 @@ class PlanController extends Controller
         return view('planes.index')->with('plans', $plans);
     }
 
-    public function create(Request $request){
-        $name = $request->input('name');
-        $description = $request->input('description');
-        $cost = $request->input('cost');
+    public function list(){
+        $plans = Plan::all();
+        return response()->json($plans, 200);
+    }
 
-        Plan::create([
+    public function create(Request $request){
+        // Validaciones
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'cost' => 'required|numeric',
+        ]);
+
+        // Si las validaciones pasan, se obtienen los datos validados
+        $name = $validatedData['name'];
+        $description = $validatedData['description'];
+        $cost = $validatedData['cost'];
+
+        // Crear el plan
+        $plan = Plan::create([
             'name' => $name,
             'description' => $description,
             'cost' => $cost,
         ]);
 
-        return redirect('/admin/planes'); // Redirige al usuario a la página de inicio de sesión o a la página que desees después del cierre de sesión.
-
+        // Responder con un JSON
+        return response()->json($plan, 201);
     }
 }

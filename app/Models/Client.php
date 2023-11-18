@@ -9,6 +9,16 @@ class Client extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'names',
+        'surnames',
+        'phone',
+        'email',
+        'address',
+        'id_type',
+        'identification'
+    ];
+
 
     public function suscriptions()
     {

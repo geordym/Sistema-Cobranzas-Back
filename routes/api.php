@@ -42,3 +42,16 @@ Route::get('/payments', [App\Http\Controllers\PaymentController::class, 'list'])
 
 
 Route::post('/auth/login', [App\Http\Controllers\LoginController::class, 'login']);
+
+
+//PLAN ROUTES
+Route::post('/plans', [App\Http\Controllers\PlanController::class, 'create']);
+Route::get('/plans', [App\Http\Controllers\PlanController::class, 'list']);
+
+//TARIFAS ROUTES
+Route::post('/tarifas', [App\Http\Controllers\TarifaController::class, 'create']);
+Route::get('/tarifas', [App\Http\Controllers\TarifaController::class, 'list']);
+
+//CLIENT ROUTES
+Route::post('/clients', [App\Http\Controllers\ClientController::class, 'create']);
+Route::get('/clients', [App\Http\Controllers\ClientController::class, 'list']);
