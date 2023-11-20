@@ -21,6 +21,13 @@ return new class extends Migration
             $table->string('email');
             $table->string('address');
             $table->string('id_type');
+
+            $table->string('RTN')->default("");
+            $table->string('birth_date')->default("");
+            $table->string('gender')->default("");
+            $table->string('status')->default("");
+
+
             $table->unsignedBigInteger('identification');
             $table->timestamps();
         });

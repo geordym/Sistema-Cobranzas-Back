@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use function PHPSTORM_META\map;
+
 class Client extends Model
 {
     use HasFactory;
@@ -16,7 +18,10 @@ class Client extends Model
         'email',
         'address',
         'id_type',
-        'identification'
+        'identification',
+        'rtn',
+        'birth_date',
+        'gender'
     ];
 
 

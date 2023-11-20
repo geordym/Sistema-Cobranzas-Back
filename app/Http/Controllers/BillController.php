@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Client;
 use App\Models\Bill;
 use App\Models\ItemBill;
+use App\Models\Option;
+use App\Models\Payment;
+use PDF;
+use Carbon\Carbon;
 
 class BillController extends Controller
 {
@@ -60,11 +64,24 @@ class BillController extends Controller
             $totalBill+= $item["total"];
         }
 
+        $days_expiration_bills = Option::where('property', 'days_expiration_bills')->first();
+        $dateCarbon = Carbon::parse($date);
+        $expiration_date = $dateCarbon->addDays($days_expiration_bills->value);
+
+
+        $dateWithoutDashes = str_replace("-", "", $date);
+
         $bill = Bill::create([
             'client_id'=> $client_id,
             'date'=> $date,
-            'total' => $totalBill
+            'total' => $totalBill,
+            'expiration_date' => $expiration_date,
+            'code' => ""
         ]);
+
+        $code = "F" . $dateWithoutDashes . $client_id . $bill->id;
+        $bill->code = $code;
+        $bill->save();
 
         $bill->items()->createMany($billItems);
 
@@ -76,8 +93,49 @@ class BillController extends Controller
 
     public function list()
     {
-        $bills = Bill::with(['client', 'items'])->get();
+        $bills = Bill::with(['client', 'items', 'payments'])->get();
 
         return response()->json( $bills, 200);
     }
+
+
+    public function findByCode($code){
+        $bill = Bill::with(['client', 'items', 'payments'])->where('code', $code)->first();
+
+        if (!$bill) {
+            return response()->json(['errors' => 'La factura no existe en el sistema'], 400);
+        }
+
+        return response()->json($bill, 200);
+
+    }
+
+
+    public function printNormal($code)
+    {
+
+
+        $bill = Bill::with(['client', 'items'])->where('code', $code)->first();
+        $client = $bill->client;
+
+        $names = $client->names;
+        $dateBill = $bill->created_at;
+        $code = $bill->code;
+        $remitente = "SISTEMA COBRANZAS";
+        $items = $bill->items;
+
+        $data = [
+            'names' => $names,
+            'dateBill' => $dateBill,
+            'code' => $code,
+            'remitente' => $remitente,
+            'items' => $items
+        ];
+
+        $pdf = PDF::loadView('prints.billnormal', compact('data'));
+
+        return $pdf->download('mi_pdf.pdf');
+    }
+
+
 }

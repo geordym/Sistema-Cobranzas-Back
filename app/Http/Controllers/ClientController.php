@@ -16,6 +16,23 @@ class ClientController extends Controller
         return response()->json($clients, 200);
     }
 
+
+    public function listByNames($names){
+        $clients = Client::where('names', 'like', '%' . $names . '%')->get();
+        return response()->json($clients, 200);
+    }
+
+    public function listBySurnames($surnames){
+        $clients = Client::where('surnames', 'like', '%' . $surnames . '%')->get();
+        return response()->json($clients, 200);
+    }
+
+    public function listByIdentification($identification){
+        $clients = Client::where('identification', 'like', '%' . $identification . '%')->get();
+        return response()->json($clients, 200);
+    }
+
+
     public function create(Request $request){
         // Validaciones
         $validator = Validator::make($request->all(), [
@@ -25,7 +42,10 @@ class ClientController extends Controller
             'email' => 'required|email|max:255',
             'address' => 'required|string|max:255',
             'id_type' => 'required|string|max:255',
-            'identification' => 'required|numeric',
+            'rtn' => 'required',
+            'birth_date' => 'required',
+            'gender' => 'required'
+
         ]);
 
         // Comprobar si las validaciones fallan
@@ -41,6 +61,9 @@ class ClientController extends Controller
         $address = $request->input('address');
         $id_type = $request->input('id_type');
         $identification = $request->input('identification');
+        $rtn = $request->input('rtn');
+        $birth_date = $request->input('birth_date');
+        $gender = $request->input('gender');
 
         // Crear el cliente
         $client = Client::create([
@@ -51,6 +74,9 @@ class ClientController extends Controller
             'address' => $address,
             'id_type' => $id_type,
             'identification' => $identification,
+            'rtn' => $rtn,
+            'birth_date' => $birth_date,
+            'gender' => $gender
         ]);
 
         // Responder con un JSON

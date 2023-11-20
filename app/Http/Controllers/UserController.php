@@ -75,4 +75,42 @@ class UserController extends Controller
     }
 
 
+
+    public function restorepassword($id){
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['errors' => 'El usuario no existe en el sistema'], 400);
+        }
+
+        $email = $user->email;
+        $user->password = bcrypt($email);
+        $user->save();
+        return response()->json(['message' => "Usuario actualizado exitosamente"], 201);
+
+    }
+
+    public function destroy(Request $request)
+    {
+        $json = $request->json()->all();
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $id = $json["id"];
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['errors' => 'El usuario no existe en el sistema'], 400);
+        }
+
+        $user->delete(); // Corregir esta línea
+
+        return response()->json(['message' => 'Usuario eliminado'], 200);
+    }
+
 }

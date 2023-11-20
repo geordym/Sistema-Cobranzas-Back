@@ -13,7 +13,9 @@ class Bill extends Model
     protected $fillable = [
         'client_id',
         'date',
-        'total'
+        'total',
+        'expiration_date',
+        'code'
     ];
 
     public function items()

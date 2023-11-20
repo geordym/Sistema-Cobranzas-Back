@@ -22,6 +22,10 @@ return new class extends Migration
             $table->string('payment_method');
             $table->string('status');
             $table->text('notes')->nullable();
+
+            $table->string('code')->nullable();
+
+
             $table->timestamps();
 
             $table->foreign('bill_id')->references('id')->on('bills')->onDelete('set null');
