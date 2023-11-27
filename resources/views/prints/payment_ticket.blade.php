@@ -30,7 +30,7 @@
 
     <table width="100%">
         <tr>
-            <td valign="top"><img src="{{asset('img/logo.jpg')}}" alt="" width="100" /></td>
+            <td valign="top"><img src="{{asset('img/logo2.jpg')}}" alt="" width="100" /></td>
             <td align="right">
 
             </td>

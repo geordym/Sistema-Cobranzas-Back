@@ -25,6 +25,7 @@ Route::post('/users', [App\Http\Controllers\UserController::class, 'create']);
 Route::get('/users', [App\Http\Controllers\UserController::class, 'list']);
 Route::get('/users/restore/{id}', [App\Http\Controllers\UserController::class, 'restorepassword']);
 Route::post('/users/delete', [App\Http\Controllers\UserController::class, 'destroy']);
+Route::post('/users/changepassword', [App\Http\Controllers\UserController::class, 'changepassword']);
 
 
 /*CLIENTS ROUTES */
@@ -61,12 +62,18 @@ Route::get('/tarifas', [App\Http\Controllers\TarifaController::class, 'list']);
 
 //CLIENT ROUTES
 Route::post('/clients', [App\Http\Controllers\ClientController::class, 'create']);
+Route::post('/clients/update', [App\Http\Controllers\ClientController::class, 'update']);
+
 Route::get('/clients', [App\Http\Controllers\ClientController::class, 'list']);
 Route::get('/clients/by-names/{names}', [App\Http\Controllers\ClientController::class, 'listByNames']);
 Route::get('/clients/by-surnames/{surnames}', [App\Http\Controllers\ClientController::class, 'listBySurnames']);
 Route::get('/clients/by-identification/{identification}', [App\Http\Controllers\ClientController::class, 'listByIdentification']);
+Route::get('/clients/by-id/{id}', [App\Http\Controllers\ClientController::class, 'findById']);
 
 
 //REPORTE ROUTES
-Route::get('/reports', [App\Http\Controllers\ReporteController::class, 'reporteClientes']);
+Route::get('/reports/clients', [App\Http\Controllers\ReporteController::class, 'reporteClientes']);
+Route::get('/reports/payments', [App\Http\Controllers\ReporteController::class, 'reportePagos']);
+Route::get('/reports/bills', [App\Http\Controllers\ReporteController::class, 'reporteFacturas']);
+Route::get('/reports/suscriptions', [App\Http\Controllers\ReporteController::class, 'reporteSuscripciones']);
 

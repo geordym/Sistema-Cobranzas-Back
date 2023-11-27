@@ -29,14 +29,14 @@ $subtotal = 0;
             <h1>Factura</h1>
         </div>
         <div class="col-xs-2">
-        <img class="img img-responsive img-thumbnail img-fluid" src="{{ asset('img/logo.jpg') }}" alt="Logotipo" style="width: 100px; heigth: 100px;">
+        <img class="img img-responsive img-thumbnail img-fluid" src="{{ asset('img/logo2.jpg') }}" alt="Logotipo" style="width: 100px; heigth: 100px;">
         </div>
     </div>
     <hr>
     <div class="row">
         <div class="col-xs-10">
             <h1 class="h6">{{ $data['remitente'] }}</h1>
-            <h1 class="h6"><?php echo $web ?></h1>
+            <h1 class="h6"></h1>
         </div>
         <div class="col-xs-2 text-center">
             <strong>Fecha</strong>
@@ -54,10 +54,7 @@ $subtotal = 0;
             <h1 class="h2">Cliente</h1>
             <strong><?php echo $data["names"] ?></strong>
         </div>
-        <div class="col-xs-6">
-            <h1 class="h2">Remitente</h1>
-            <strong><?php echo $data["remitente"]?></strong>
-        </div>
+
     </div>
     <div class="row">
         <div class="col-xs-12">

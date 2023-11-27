@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 
 use App\Models\User;
@@ -27,23 +28,15 @@ class UserController extends Controller
     public function list(){
         $users = User::with('role')->get();
 
-        $newUsers = [];
-
-        foreach ($users as $user) {
-            $newUser = $user;
-            $newUser->rol = $user->role->name;
-            $newUsers[] = $newUser;
-        }
-
         return response()->json($users, 200);
     }
 
 
     public function create(Request $request){
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'rol' => 'required|string|exists:roles,name',
         ]);
 
         if ($validator->fails()) {
@@ -53,7 +46,7 @@ class UserController extends Controller
         $json = $request->json()->all();
         $name = $json['name'];
         $email = $json['email'];
-        $rol =  $json['rol'];
+        $rol =  $json['role']['name'];
 
         // Obtener el ID del rol a través de la consulta where
         $id_rol = Role::where('name', $rol)->first()->id;
@@ -72,6 +65,36 @@ class UserController extends Controller
     public function logout(){
         Auth::logout(); // Cierra la sesión del usuario
         return redirect('/login'); // Redirige al usuario a la página de inicio de sesión o a la página que desees después del cierre de sesión.
+    }
+
+    public function changepassword(Request $request) {
+          // Validaciones
+    $validator = Validator::make($request->all(), [
+        'id' => 'required|numeric',
+        'password' => 'required|string|min:8',
+    ]);
+
+    // Comprobar si las validaciones fallan
+    if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()], 400);
+    }
+
+    // Obtener el usuario a actualizar
+    $user = User::find($request->input('id'));
+
+    // Comprobar si el usuario existe
+    if (!$user) {
+        return response()->json(['error' => 'Usuario no encontrado'], 404);
+    }
+
+    // Cambiar la contraseña
+    $user->password = Hash::make($request->input('password'));
+
+    // Guardar los cambios
+    $user->save();
+
+    // Responder con un JSON
+    return response()->json($user, 200);
     }
 
 

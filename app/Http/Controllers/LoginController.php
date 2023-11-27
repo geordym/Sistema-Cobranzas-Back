@@ -16,7 +16,7 @@ class LoginController extends Controller
         $contraseña = $json["contraseña"];
 
         // Buscar usuario por correo y contraseña
-        $usuario = User::where('email', $correo)->first();
+        $usuario = User::with('role')->where('email', $correo)->first();
 
         // Verificar si el usuario existe y si la contraseña es correcta
         if ($usuario && Hash::check($contraseña, $usuario->password)) {

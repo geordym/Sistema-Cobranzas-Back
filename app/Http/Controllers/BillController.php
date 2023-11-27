@@ -100,6 +100,11 @@ class BillController extends Controller
 
 
     public function findByCode($code){
+
+        if($code === ""){
+            return response()->json(['errors' => 'El codigo no puede estar vacio'], 400);
+        }
+
         $bill = Bill::with(['client', 'items', 'payments'])->where('code', $code)->first();
 
         if (!$bill) {
@@ -113,11 +118,11 @@ class BillController extends Controller
 
     public function printNormal($code)
     {
-
-
         $bill = Bill::with(['client', 'items'])->where('code', $code)->first();
+        if (!$bill) {
+            return response()->json(['errors' => 'La factura no existe en el sistema'], 400);
+        }
         $client = $bill->client;
-
         $names = $client->names;
         $dateBill = $bill->created_at;
         $code = $bill->code;
