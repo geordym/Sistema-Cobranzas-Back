@@ -17,17 +17,9 @@ class ReporteController extends Controller
     //
 
     public function reporteClientes(Request $request){
-        $json = $request->json()->all();
-        $validator = Validator::make($json, [
-            'start_date' => 'required',
-            'end_date' => 'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
 
-        $start_date = $json["start_date"];
-        $end_date = $json["end_date"];
+        $start_date = $request->input('fecha_inicio');
+        $end_date = $request->input('fecha_fin');
 
         $clients = Client::whereBetween('created_at', [$start_date, $end_date])->get();
 
@@ -43,17 +35,10 @@ class ReporteController extends Controller
     }
 
     public function reportePagos(Request $request){
-        $json = $request->json()->all();
-        $validator = Validator::make($json, [
-            'start_date' => 'required',
-            'end_date' => 'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
 
-        $start_date = $json["start_date"];
-        $end_date = $json["end_date"];
+
+        $start_date = $request->input('fecha_inicio');
+        $end_date = $request->input('fecha_fin');
 
         $payments = Payment::with(['client'])->whereBetween('created_at', [$start_date, $end_date])->get();
         $data = [
@@ -69,17 +54,9 @@ class ReporteController extends Controller
 
 
     public function reporteFacturas(Request $request){
-        $json = $request->json()->all();
-        $validator = Validator::make($json, [
-            'start_date' => 'required',
-            'end_date' => 'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
 
-        $start_date = $json["start_date"];
-        $end_date = $json["end_date"];
+        $start_date = $request->input('fecha_inicio');
+        $end_date = $request->input('fecha_fin');
 
         $bills = Bill::with(['client'])->whereBetween('created_at', [$start_date, $end_date])->get();
 
@@ -97,17 +74,9 @@ class ReporteController extends Controller
     }
 
     public function reporteSuscripciones(Request $request){
-        $json = $request->json()->all();
-        $validator = Validator::make($json, [
-            'start_date' => 'required',
-            'end_date' => 'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
 
-        $start_date = $json["start_date"];
-        $end_date = $json["end_date"];
+        $start_date = $request->input('fecha_inicio');
+        $end_date = $request->input('fecha_fin');
 
         $suscriptions = Suscription::with(['client', 'plan'])->whereBetween('created_at', [$start_date, $end_date])->get();
 
