@@ -32,6 +32,7 @@ Route::post('/users/changepassword', [App\Http\Controllers\UserController::class
 
 Route::post('/suscriptions', [App\Http\Controllers\SuscriptionController::class, 'create']);
 Route::get('/suscriptions', [App\Http\Controllers\SuscriptionController::class, 'list']);
+Route::post('/suscriptions/renew', [App\Http\Controllers\SuscriptionController::class, 'renew']);
 
 /*BILLS ROUTES */
 
@@ -76,4 +77,8 @@ Route::get('/reports/clients', [App\Http\Controllers\ReporteController::class, '
 Route::get('/reports/payments', [App\Http\Controllers\ReporteController::class, 'reportePagos']);
 Route::get('/reports/bills', [App\Http\Controllers\ReporteController::class, 'reporteFacturas']);
 Route::get('/reports/suscriptions', [App\Http\Controllers\ReporteController::class, 'reporteSuscripciones']);
+
+//MESSAGES ROUTES
+Route::post('/messages/normal', [App\Http\Controllers\MessageController::class, 'sendmessage']);
+Route::post('/messages/bill', [App\Http\Controllers\MessageController::class, 'sendbill']);
 

@@ -13,7 +13,8 @@ class Suscription extends Model
         'plan_id',
         'client_id',
         'cost',
-        'start_date'
+        'start_date',
+        'expiration_date'
     ];
 
 
