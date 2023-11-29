@@ -19,6 +19,56 @@ class UserController extends Controller
         return view('home'); // Asegúrate de que esta vista exista
     }
 
+    public function findById($id){
+        $user = User::with('role')->find($id);
+        if (!$user) {
+            return response()->json(['errors' => 'El usuario no existe en el sistema'], 400);
+        }
+
+        return response()->json($user);
+    }
+
+    public function update(Request $request){
+        $json = $request->json()->all();
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+        ]);
+
+
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $id = $json["id"];
+
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['errors' => 'El usuario no existe en el sistema'], 400);
+        }
+
+        if ($user->email !== $json["email"]) {
+            $userEmail = User::where('email', $json["email"])->first();
+            if($userEmail){
+                return response()->json(['errors' => 'Este correo ya esta tomado'], 400);
+            }
+        }
+
+        $id_rol = Role::where('name', $json['role']['name'])->first()->id;
+
+
+        $user->name = $json["name"];
+        $user->email = $json["email"];
+        $user->id_rol = $id_rol;
+        $user->save();
+
+        return response()->json($user, 200);
+
+    }
+
 
     public function profile(){
         $user = auth()->user();
@@ -110,6 +160,22 @@ class UserController extends Controller
         $user->save();
         return response()->json(['message' => "Usuario actualizado exitosamente"], 201);
 
+    }
+
+    public function desactivate($id){
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['errors' => 'El usuario no existe en el sistema'], 400);
+        }
+
+        if($user->status == 0){
+            $user->status = 1;
+        }else {
+            $user->status = 0;
+        }
+
+        $user->save();
+        return response()->json(['message' => "Usuario desactivado/activado exitosamente"], 201);
     }
 
     public function destroy(Request $request)

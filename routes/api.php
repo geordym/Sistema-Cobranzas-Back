@@ -26,6 +26,9 @@ Route::get('/users', [App\Http\Controllers\UserController::class, 'list']);
 Route::get('/users/restore/{id}', [App\Http\Controllers\UserController::class, 'restorepassword']);
 Route::post('/users/delete', [App\Http\Controllers\UserController::class, 'destroy']);
 Route::post('/users/changepassword', [App\Http\Controllers\UserController::class, 'changepassword']);
+Route::post('/users/desactivate/{id}', [App\Http\Controllers\UserController::class, 'desactivate']);
+Route::get('/users/{id}', [App\Http\Controllers\UserController::class, 'findById']);
+Route::post('/users/update', [App\Http\Controllers\UserController::class, 'update']);
 
 
 /*CLIENTS ROUTES */

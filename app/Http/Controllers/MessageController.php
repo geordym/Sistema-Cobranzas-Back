@@ -88,5 +88,7 @@ class MessageController extends Controller
         $maildata = new \stdClass();
         $maildata->message = $json["message"];
         Mail::to($client->email)->send(new MessageNormal($maildata));
+
+        return response()->json("Correo enviado exitosamente", 200);
     }
 }

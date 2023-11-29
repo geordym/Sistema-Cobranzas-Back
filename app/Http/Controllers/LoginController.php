@@ -18,6 +18,15 @@ class LoginController extends Controller
         // Buscar usuario por correo y contraseña
         $usuario = User::with('role')->where('email', $correo)->first();
 
+        // Comprobar si el cliente existe
+        if (!$usuario) {
+            return response()->json(['errors' => 'Usuario no encontrado'], 404);
+        }
+
+        if($usuario->status == 0){
+            return response()->json(['message' => 'Este usuario se encuentra desactivado'], 401);
+        }
+
         // Verificar si el usuario existe y si la contraseña es correcta
         if ($usuario && Hash::check($contraseña, $usuario->password)) {
             // Usuario autenticado correctamente
