@@ -45,4 +45,32 @@ class TarifaController extends Controller
         return response()->json(['tarifa' => $tarifa], 201);
     }
 
+
+    public function update(Request $request){
+        $json = $request->json()->all();
+
+        $validator = Validator::make($json, [
+            'id' => 'required',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'cost' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $tarifa = Tarifa::find($request->input('id'));
+        if (!$tarifa) {
+            return response()->json(['errors' => 'La tarifa no existe en el sistema'], 400);
+        }
+
+        $tarifa->name = $json["name"];
+        $tarifa->description = $json["description"];
+        $tarifa->cost = $json["cost"];
+        $tarifa->save();
+        return response()->json($tarifa, 200);
+    }
+
+
 }

@@ -46,4 +46,31 @@ class PlanController extends Controller
         // Responder con un JSON
         return response()->json($plan, 201);
     }
+
+    public function update(Request $request){
+        $json = $request->json()->all();
+
+        $validator = Validator::make($json, [
+            'id' => 'required',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'cost' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $plan = Plan::find($request->input('id'));
+        if (!$plan) {
+            return response()->json(['errors' => 'El plan no existe en el sistema'], 400);
+        }
+
+        $plan->name = $json["name"];
+        $plan->description = $json["description"];
+        $plan->cost = $json["cost"];
+        $plan->save();
+        return response()->json($plan, 200);
+    }
+
 }
