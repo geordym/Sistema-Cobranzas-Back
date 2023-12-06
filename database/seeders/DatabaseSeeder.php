@@ -71,17 +71,7 @@ class DatabaseSeeder extends Seeder
             'cost' => 200,
         ]);
 
-        Tarifa::create([
-            'name' => 'AFILIACION',
-            'description' => 'COSTO DE AFILIARSE',
-            'cost' => 200,
-        ]);
-
-        Tarifa::create([
-            'name' => 'RECONEXION',
-            'description' => 'Costo por reconectar servicio',
-            'cost' => 200,
-        ]);
+      
 
         Client::create([
             'names' => 'LUIS PEREZ',
