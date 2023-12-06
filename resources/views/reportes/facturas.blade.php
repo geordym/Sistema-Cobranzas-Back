@@ -5,6 +5,13 @@
 <head>
 </head>
 <body>
+<div class="row">
+
+        <div class="col-xs-2">
+        <img class="img img-responsive img-thumbnail img-fluid" src="{{ asset('img/logo.jpg') }}" alt="Logotipo" style="width: 100px; heigth: 100px;">
+        </div>
+    </div>
+
     <h1>Listado de facturas en el sistema</h1>
     <p>{{ $contenido }}</p>
 
