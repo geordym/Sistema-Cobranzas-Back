@@ -61,10 +61,6 @@ Route::post('/plans', [App\Http\Controllers\PlanController::class, 'create']);
 Route::get('/plans', [App\Http\Controllers\PlanController::class, 'list']);
 Route::post('/plans/update', [App\Http\Controllers\PlanController::class, 'update']);
 
-//TARIFAS ROUTES
-Route::post('/tarifas', [App\Http\Controllers\TarifaController::class, 'create']);
-Route::get('/tarifas', [App\Http\Controllers\TarifaController::class, 'list']);
-Route::post('/tarifas/update', [App\Http\Controllers\TarifaController::class, 'update']);
 
 //CLIENT ROUTES
 Route::post('/clients', [App\Http\Controllers\ClientController::class, 'create']);

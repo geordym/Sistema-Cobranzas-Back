@@ -29,7 +29,7 @@ $subtotal = 0;
             <h1>Factura</h1>
         </div>
         <div class="col-xs-2">
-        <img class="img img-responsive img-thumbnail img-fluid" src="{{ asset('img/logo2.jpg') }}" alt="Logotipo" style="width: 100px; heigth: 100px;">
+        <img class="img img-responsive img-thumbnail img-fluid" src="{{ asset('img/logo.jpg') }}" alt="Logotipo" style="width: 100px; heigth: 100px;">
         </div>
     </div>
     <hr>
